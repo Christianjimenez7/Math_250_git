@@ -1,0 +1,65 @@
+---
+title: "math250_nov5_ChristianJimenez"
+author: "Christian Jimenez"
+format: html
+embed-resources: true
+---
+```{r, echo=FALSE, message =FALSE}
+library(tidyverse)
+library(ISLR2)
+data("Carseats")
+```
+
+# Problem 1
+
+The first two problems in this set refer to the ISLR2::Carseats, does this data provide evidence against the company’s claim that the average price of their own seats is $110? Follow all best practices from class, including hypotheses, a relevant visualization, and a conclusion in non-technical language.
+
+```{r}
+t.test(Carseats$Price, mu = 110)
+```
+
+$H_0: \mu = 110$  $H_1: \mu \neq 110$
+
+Testing whether the average price of Carseats is $110.
+
+
+
+```{r}
+ggplot(Carseats, aes(y = Price)) +
+  geom_boxplot(fill = "lightblue")+
+    geom_hline(yintercept = 110, color = "red", linetype = "dashed")+  theme_minimal()
+  
+  
+
+```
+
+## Conclusion 
+
+After our test and box plot we can clearly see the dashed red line showing the average price claim of $110, which  is not true. Companies are charging noticeably more on average. Avergaing more around $115 - $116 range.
+
+
+# Problem 2
+Compute a level 90% confidence interval for the mean competitor price in the population from which this sample is drawn. What is the sample mean? What is the margin of error?
+
+```{r}
+t.test(Carseats$CompPrice, conf.level = 0.90)
+```
+```{r}
+M.E = (126.2391-123.7109)/2
+M.E 
+```
+
+The sample mean of the `CompPrice` column is $124.98, with the confidence interval ranging from $123.71 to $126.24. This shows our margin of error at a 90% confidence interval is $1.26 indicating that we are 90% confident the true mean falls within this interval.
+
+#Problem 3
+create a table with counts of penguin species and home islands in the penguins set. Include marginal counts in your table.
+```{r, message=FALSE}
+data("penguins")
+
+```
+
+```{r}
+table = table(penguins$species, penguins$island )
+addmargins(table)
+```
+
